@@ -10,7 +10,7 @@ import javax.inject.Named
 
 class PoiListPresenter @Inject constructor(
     @Named("uiScheduler") uiScheduler: Scheduler, @Named("processScheduler") processScheduler: Scheduler, val poiRepository: PoiRepository
-) : BasePresenter<PoiListView>(uiScheduler, processScheduler), PoiListPresenterContract {
+) : BasePresenter<PoiListView>(uiScheduler, processScheduler), PoiListContract {
 
     override fun onViewCreated(view: PoiListView) {
         super.onViewCreated(view)

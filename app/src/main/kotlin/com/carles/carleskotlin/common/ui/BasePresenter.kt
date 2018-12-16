@@ -4,7 +4,7 @@ import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 
-abstract class BasePresenter<V : BaseView>(protected val uiScheduler: Scheduler, protected val processScheduler: Scheduler) : BasePresenterContract<V> {
+abstract class BasePresenter<V : BaseView>(protected val uiScheduler: Scheduler, protected val processScheduler: Scheduler) : BaseContract<V> {
 
     internal val disposables = CompositeDisposable()
     internal var view: V? = null

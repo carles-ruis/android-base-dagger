@@ -6,7 +6,7 @@ interface BaseView {
     fun showError(messageId: Int, onRetry: (() -> Unit)? = null)
 }
 
-interface BasePresenterContract<V : BaseView> {
+interface BaseContract<V : BaseView> {
     fun onViewCreated(view: V)
     fun onViewDestroyed()
 }

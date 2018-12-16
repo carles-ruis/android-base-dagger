@@ -10,7 +10,7 @@ import dagger.android.AndroidInjection
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import javax.inject.Inject
 
-abstract class BaseActivity<P : BasePresenterContract<V>, V : BaseView> : AppCompatActivity(), BaseView {
+abstract class BaseActivity<P : BaseContract<V>, V : BaseView> : AppCompatActivity(), BaseView {
 
     protected var alertDialog: AlertDialog? = null
     protected abstract val layoutResourceId: Int

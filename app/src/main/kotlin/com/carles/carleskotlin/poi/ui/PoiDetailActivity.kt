@@ -10,7 +10,7 @@ import com.carles.carleskotlin.poi.model.Poi
 import kotlinx.android.synthetic.main.activity_poi_detail.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
-class PoiDetailActivity : BaseActivity<PoiDetailPresenterContract, PoiDetailView>(), PoiDetailView {
+class PoiDetailActivity : BaseActivity<PoiDetailContract, PoiDetailView>(), PoiDetailView {
 
     override val layoutResourceId = R.layout.activity_poi_detail
     override fun getView() = this

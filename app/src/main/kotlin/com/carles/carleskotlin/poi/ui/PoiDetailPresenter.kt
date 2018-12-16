@@ -9,7 +9,7 @@ import javax.inject.Named
 
 class PoiDetailPresenter @Inject constructor(
     @Named("uiScheduler") uiScheduler: Scheduler, @Named("processScheduler") processScheduler: Scheduler, val poiRepository: PoiRepository
-) : BasePresenter<PoiDetailView>(uiScheduler, processScheduler), PoiDetailPresenterContract {
+) : BasePresenter<PoiDetailView>(uiScheduler, processScheduler), PoiDetailContract {
 
     private lateinit var id: String
 

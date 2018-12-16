@@ -8,7 +8,7 @@ import com.carles.carleskotlin.poi.model.Poi
 import kotlinx.android.synthetic.main.activity_poi_list.poilist_recyclerview
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 
-class PoiListActivity : BaseActivity<PoiListPresenterContract, PoiListView>(), PoiListView, PoiListAdapter.Listener {
+class PoiListActivity : BaseActivity<PoiListContract, PoiListView>(), PoiListView, PoiListAdapter.Listener {
 
     override val layoutResourceId = R.layout.activity_poi_list
     override fun getView(): PoiListView = this
