@@ -10,7 +10,7 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class ServiceModule {
+object ServiceModule {
 
     @Provides
     @Singleton

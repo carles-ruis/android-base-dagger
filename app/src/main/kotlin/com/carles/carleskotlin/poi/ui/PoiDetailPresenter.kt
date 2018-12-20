@@ -1,24 +1,31 @@
 package com.carles.carleskotlin.poi.ui
 
+import com.carles.carleskotlin.AppModule
+import com.carles.carleskotlin.ServiceModule
 import com.carles.carleskotlin.common.getMessageId
 import com.carles.carleskotlin.common.ui.BasePresenter
+import com.carles.carleskotlin.poi.DaggerPoiPresenterInjector
+import com.carles.carleskotlin.poi.PoiModule
 import com.carles.carleskotlin.poi.repository.PoiRepository
-import io.reactivex.Scheduler
 import javax.inject.Inject
-import javax.inject.Named
 
-class PoiDetailPresenter @Inject constructor(
-    @Named("uiScheduler") uiScheduler: Scheduler, @Named("processScheduler") processScheduler: Scheduler, val poiRepository: PoiRepository
-) : BasePresenter<PoiDetailView>(uiScheduler, processScheduler), PoiDetailContract {
+class PoiDetailPresenter(poiDetailView: PoiDetailView, private val id: String) : BasePresenter<PoiDetailView>(poiDetailView) {
 
-    private lateinit var id: String
+    @Inject
+    lateinit var poiRepository: PoiRepository
 
-    override fun initialize(id: String) {
-        this.id = id
+    init {
+        DaggerPoiPresenterInjector.builder()
+            .baseView(view)
+            .appModule(AppModule)
+            .serviceModule(ServiceModule)
+            .poiModule(PoiModule)
+            .build()
+            .inject(this)
     }
 
-    override fun onViewCreated(view: PoiDetailView) {
-        super.onViewCreated(view)
+    override fun onViewCreated() {
+        super.onViewCreated()
         getPoiDetail()
     }
 

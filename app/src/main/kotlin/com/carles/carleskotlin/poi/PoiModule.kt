@@ -1,23 +1,17 @@
 package com.carles.carleskotlin.poi
 
-import com.carles.carleskotlin.ActivityScope
-import com.carles.carleskotlin.poi.ui.PoiDetailPresenter
-import com.carles.carleskotlin.poi.ui.PoiDetailContract
-import com.carles.carleskotlin.poi.ui.PoiListPresenter
-import com.carles.carleskotlin.poi.ui.PoiListContract
+import com.carles.carleskotlin.poi.data.datasource.PoiCloudDatasource
+import com.carles.carleskotlin.poi.data.datasource.PoiLocalDatasource
+import com.carles.carleskotlin.poi.repository.PoiRepository
 import dagger.Module
 import dagger.Provides
+import javax.inject.Singleton
 
 @Module
-class PoiModule {
-
+object PoiModule {
     @Provides
-    @ActivityScope
-    internal fun providePoiListPresenter(poiListPresenter: PoiListPresenter): PoiListContract =
-        poiListPresenter
+    @Singleton
+    internal fun providePoiRepository(poiLocalDatasource: PoiLocalDatasource, poiCloudDatasource: PoiCloudDatasource) =
+        PoiRepository(poiLocalDatasource, poiCloudDatasource)
 
-    @Provides
-    @ActivityScope
-    internal fun providePoiDetailPresenter(poiDetailPresenter: PoiDetailPresenter): PoiDetailContract =
-        poiDetailPresenter
 }

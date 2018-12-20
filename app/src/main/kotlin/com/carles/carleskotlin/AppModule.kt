@@ -1,8 +1,8 @@
 package com.carles.carleskotlin
 
-import android.app.Application
 import android.content.Context
 import android.preference.PreferenceManager
+import com.carles.carleskotlin.common.ui.BaseView
 import dagger.Module
 import dagger.Provides
 import io.reactivex.Scheduler
@@ -12,10 +12,10 @@ import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
-class AppModule {
+object AppModule {
 
     @Provides
-    internal fun provideContext(application: Application): Context = application
+    internal fun provideContext(baseView: BaseView) = baseView.getContext()
 
     @Provides
     @Singleton

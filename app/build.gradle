@@ -45,6 +45,12 @@ dependencies {
     implementation appDependencies.retrofit
     implementation appDependencies.retrofitConverterGson
     implementation appDependencies.retrofitAdapterRxJava
+    implementation appDependencies.koin
+    implementation appDependencies.koinScope
+    implementation appDependencies.koinViewModel
+    implementation appDependencies.lifecycleExtensions
+    implementation appDependencies.roomRuntime
+    kapt appDependencies.roomCompiler
 
     implementation appDependencies.dagger
     kapt appDependencies.daggerCompiler

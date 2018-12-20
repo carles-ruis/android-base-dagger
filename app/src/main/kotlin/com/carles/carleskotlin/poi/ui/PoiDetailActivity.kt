@@ -10,10 +10,9 @@ import com.carles.carleskotlin.poi.model.Poi
 import kotlinx.android.synthetic.main.activity_poi_detail.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
-class PoiDetailActivity : BaseActivity<PoiDetailContract, PoiDetailView>(), PoiDetailView {
+class PoiDetailActivity : BaseActivity<PoiDetailPresenter>(), PoiDetailView {
 
     override val layoutResourceId = R.layout.activity_poi_detail
-    override fun getView() = this
 
     override fun initViews() {
         setSupportActionBar(toolbar)
@@ -23,7 +22,7 @@ class PoiDetailActivity : BaseActivity<PoiDetailContract, PoiDetailView>(), PoiD
     }
 
     override fun initComponents() {
-        presenter.initialize(intent.getStringExtra(EXTRA_ID))
+        presenter = PoiDetailPresenter(this, intent.getStringExtra(EXTRA_ID))
     }
 
     override fun displayPoiDetail(poi: Poi) {

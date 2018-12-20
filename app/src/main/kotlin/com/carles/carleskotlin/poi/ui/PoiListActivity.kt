@@ -8,10 +8,9 @@ import com.carles.carleskotlin.poi.model.Poi
 import kotlinx.android.synthetic.main.activity_poi_list.poilist_recyclerview
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 
-class PoiListActivity : BaseActivity<PoiListContract, PoiListView>(), PoiListView, PoiListAdapter.Listener {
+class PoiListActivity : BaseActivity<PoiListPresenter>(), PoiListView, PoiListAdapter.Listener {
 
     override val layoutResourceId = R.layout.activity_poi_list
-    override fun getView(): PoiListView = this
     private val adapter = PoiListAdapter()
 
     override fun initViews() {
@@ -19,6 +18,10 @@ class PoiListActivity : BaseActivity<PoiListContract, PoiListView>(), PoiListVie
         adapter.listener = this
         poilist_recyclerview.addItemDecoration(DividerItemDecoration(this, VERTICAL))
         poilist_recyclerview.adapter = adapter
+    }
+
+    override fun initComponents() {
+        presenter = PoiListPresenter(this)
     }
 
     override fun displayPoiList(poiList: List<Poi>) {

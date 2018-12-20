@@ -1,12 +1,10 @@
 package com.carles.carleskotlin.common.ui
 
+import android.content.Context
+
 interface BaseView {
+    fun getContext() : Context
     fun showProgress()
     fun hideProgress()
     fun showError(messageId: Int, onRetry: (() -> Unit)? = null)
-}
-
-interface BaseContract<V : BaseView> {
-    fun onViewCreated(view: V)
-    fun onViewDestroyed()
 }
