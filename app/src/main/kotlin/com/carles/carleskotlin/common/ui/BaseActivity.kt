@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import com.carles.carleskotlin.R
+import com.carles.carleskotlin.R.id.progressbar_layout
 import kotlinx.android.synthetic.main.layout_progressbar.*
 import javax.inject.Inject
 

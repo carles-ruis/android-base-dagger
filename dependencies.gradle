@@ -7,6 +7,7 @@ ext {
     jUnitVersion = '4.12'
     testRunnerVersion = '1.0.1'
     espressoVersion = '3.0.1'
+    mockkVersion = '1.8.13.kotlin13'
     mockitoVersion = '2.15.0'
     powermockVersion = '2.0.0-beta.5'
     daggerVersion = '2.11'
@@ -42,6 +43,7 @@ ext {
             testRunner           : "com.android.support.test:runner:$testRunnerVersion",
             espresso             : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             espressoContrib      : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
+            mockk                : "io.mockk:mockk:$mockkVersion",
             mockito              : "org.mockito:mockito-core:$mockitoVersion",
             mockitoAndroid       : "org.mockito:mockito-android:$mockitoVersion",
             powermockApi         : "org.powermock:powermock-api-mockito2:$powermockVersion",

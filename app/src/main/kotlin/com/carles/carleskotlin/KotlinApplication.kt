@@ -1,19 +1,22 @@
 package com.carles.carleskotlin
 
+import android.app.Activity
 import android.app.Application
+import dagger.android.AndroidInjector
+import dagger.android.DispatchingAndroidInjector
+import dagger.android.HasActivityInjector
 import io.realm.Realm
-import org.koin.android.ext.android.startKoin
+import javax.inject.Inject
 
-class KotlinApplication : Application()/*, HasActivityInjector*/ {
+class KotlinApplication : Application(), HasActivityInjector {
 
- /*   @Inject
+    @Inject
     internal lateinit var dispatchingAndroidInjector: DispatchingAndroidInjector<Activity>
 
-    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector*/
+    override fun activityInjector(): AndroidInjector<Activity> = dispatchingAndroidInjector
 
     override fun onCreate() {
         super.onCreate()
-        startKoin(this, )
         Realm.init(this)
     }
 }

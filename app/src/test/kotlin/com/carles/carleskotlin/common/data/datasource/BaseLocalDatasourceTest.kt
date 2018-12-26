@@ -27,6 +27,6 @@ class BaseLocalDatasourceTest {
     @Test
     fun isExpired_shouldCheckSharedPreferences() {
         datasource.isExpired("someclass", "someid")
-        Verify on sharedPreferences that sharedPreferences.getCacheExpirationTime("someclass", "someid") was called
+        Verify on sharedPreferences that sharedPreferences.getCacheExpirationTime("someclass", "someid")
     }
 }

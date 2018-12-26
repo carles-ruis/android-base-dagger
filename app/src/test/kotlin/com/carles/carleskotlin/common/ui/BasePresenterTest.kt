@@ -1,7 +1,9 @@
 package com.carles.carleskotlin.common.ui
 
-import io.reactivex.Scheduler
-import org.amshove.kluent.*
+import org.amshove.kluent.mock
+import org.amshove.kluent.shouldBe
+import org.amshove.kluent.shouldBeFalse
+import org.amshove.kluent.shouldBeTrue
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -11,26 +13,18 @@ import org.mockito.junit.MockitoJUnitRunner
 class BasePresenterTest {
 
     private lateinit var presenter : BasePresenter<BaseView>
-    private val uiScheduler : Scheduler = mock()
-    private val processScheduler : Scheduler = mock()
-    private val view : BaseView = mock()
 
     @Before
     fun setup() {
-        presenter = object : BasePresenter<BaseView>(uiScheduler, processScheduler) {}
+        presenter = object : BasePresenter<BaseView>(mock()) {}
+        presenter.uiScheduler = mock()
+        presenter.processScheduler = mock()
     }
 
     @Test
-    fun onViewCreated_shouldAssignView() {
-        presenter.onViewCreated(view)
-        presenter.view shouldBe view
-    }
-
-    @Test
-    fun onViewDestroyed_shouldUnsetView() {
-        presenter.view = view
+    fun onViewDestroyed_shouldDispose() {
+        presenter.addDisposable(mock())
         presenter.onViewDestroyed()
-        presenter.view.shouldBeNull()
         presenter.disposables.isDisposed.shouldBeTrue()
     }
 

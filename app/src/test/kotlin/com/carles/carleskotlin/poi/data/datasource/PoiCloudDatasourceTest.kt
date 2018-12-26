@@ -8,7 +8,9 @@ import com.nhaarman.mockito_kotlin.doReturn
 import com.nhaarman.mockito_kotlin.eq
 import com.nhaarman.mockito_kotlin.mock
 import io.reactivex.Single
-import org.amshove.kluent.*
+import org.amshove.kluent.Verify
+import org.amshove.kluent.on
+import org.amshove.kluent.that
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -40,8 +42,8 @@ class PoiCloudDatasourceTest {
     @Test
     fun getPoiList_shouldPerformRequest() {
         datasource.getPoiList().test().assertValue(poiList).assertComplete()
-        Verify on service that service.getPoiList() was called
-        Verify on poiListDto that poiListDto.toModel() was called
+        Verify on service that service.getPoiList()
+        Verify on poiListDto that poiListDto.toModel()
     }
 
  /*   @Test

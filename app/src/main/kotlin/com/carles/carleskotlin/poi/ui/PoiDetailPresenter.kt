@@ -30,10 +30,10 @@ class PoiDetailPresenter(poiDetailView: PoiDetailView, private val id: String) :
     }
 
     private fun getPoiDetail() {
-        view?.showProgress()
+        view.showProgress()
         addDisposable(poiRepository.getPoiDetail(id).subscribeOn(processScheduler).observeOn(uiScheduler).subscribe(
-            { view?.hideProgress(); view?.displayPoiDetail(it) },
-            { view?.showError(it.getMessageId(), { getPoiDetail() }) }
+            { view.hideProgress(); view.displayPoiDetail(it) },
+            { view.showError(it.getMessageId(), { getPoiDetail() }) }
         ))
     }
 }

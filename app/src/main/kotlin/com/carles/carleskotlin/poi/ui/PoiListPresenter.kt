@@ -31,14 +31,14 @@ class PoiListPresenter(poiListView: PoiListView) : BasePresenter<PoiListView>(po
     }
 
     private fun getPoiList() {
-        view?.showProgress()
+        view.showProgress()
         addDisposable(poiRepository.getPoiList().subscribeOn(processScheduler).observeOn(uiScheduler).subscribe(
-            { view?.hideProgress(); view?.displayPoiList(it) },
-            { view?.showError(messageId = it.getMessageId(), onRetry = { getPoiList() }) }
+            { view.hideProgress(); view.displayPoiList(it) },
+            { view.showError(messageId = it.getMessageId(), onRetry = { getPoiList() }) }
         ))
     }
 
     fun onPoiClicked(poi: Poi) {
-        view?.navigateToPoiDetail(poi.id)
+        view.navigateToPoiDetail(poi.id)
     }
 }
