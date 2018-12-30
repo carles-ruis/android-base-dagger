@@ -7,21 +7,23 @@ import com.carles.carleskotlin.common.ui.BasePresenter
 import com.carles.carleskotlin.poi.DaggerPoiPresenterInjector
 import com.carles.carleskotlin.poi.PoiModule
 import com.carles.carleskotlin.poi.repository.PoiRepository
+import io.reactivex.Scheduler
 import javax.inject.Inject
 
-class PoiDetailPresenter(poiDetailView: PoiDetailView, private val id: String) : BasePresenter<PoiDetailView>(poiDetailView) {
+class PoiDetailPresenter(poiDetailView: PoiDetailView, private val id: String, val uiScheduler: Scheduler, val processScheduler: Scheduler, test: Boolean = false) : BasePresenter<PoiDetailView>(poiDetailView) {
 
     @Inject
     lateinit var poiRepository: PoiRepository
 
     init {
-        DaggerPoiPresenterInjector.builder()
-            .baseView(view)
-            .appModule(AppModule)
-            .serviceModule(ServiceModule)
-            .poiModule(PoiModule)
-            .build()
-            .inject(this)
+        if (!test)
+            DaggerPoiPresenterInjector.builder()
+                .baseView(view)
+                .appModule(AppModule)
+                .serviceModule(ServiceModule)
+                .poiModule(PoiModule)
+                .build()
+                .inject(this)
     }
 
     override fun onViewCreated() {

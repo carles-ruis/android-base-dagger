@@ -1,19 +1,16 @@
 package com.carles.carleskotlin.common.ui
 
-import io.reactivex.Scheduler
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
-import javax.inject.Named
 
 abstract class BasePresenter<out V : BaseView>(protected val view: V) {
 
-    @Inject
+/*    @Inject
     @field:Named("uiScheduler")
     lateinit var uiScheduler: Scheduler
     @Inject
     @field:Named("processScheduler")
-    lateinit var processScheduler: Scheduler
+    lateinit var processScheduler: Scheduler*/
 
     internal val disposables = CompositeDisposable()
 

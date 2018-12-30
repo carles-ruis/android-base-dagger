@@ -8,10 +8,7 @@ ext {
     testRunnerVersion = '1.0.1'
     espressoVersion = '3.0.1'
     mockkVersion = '1.8.13.kotlin13'
-    mockitoVersion = '2.15.0'
-    powermockVersion = '2.0.0-beta.5'
     daggerVersion = '2.11'
-    kluentVersion = '1.33'
     koinVersion = '1.0.2'
     lifecycleVersion = '1.1.1'
     roomVersion = '1.1.1'
@@ -44,11 +41,11 @@ ext {
             espresso             : "com.android.support.test.espresso:espresso-core:$espressoVersion",
             espressoContrib      : "com.android.support.test.espresso:espresso-contrib:$espressoVersion",
             mockk                : "io.mockk:mockk:$mockkVersion",
-            mockito              : "org.mockito:mockito-core:$mockitoVersion",
+/*          mockito              : "org.mockito:mockito-core:$mockitoVersion",
             mockitoAndroid       : "org.mockito:mockito-android:$mockitoVersion",
             powermockApi         : "org.powermock:powermock-api-mockito2:$powermockVersion",
             powermockModule      : "org.powermock:powermock-module-junit4:$powermockVersion",
-            kluent               : "org.amshove.kluent:kluent-android:$kluentVersion",
+            kluent               : "org.amshove.kluent:kluent-android:$kluentVersion",*/
     ]
 }
 

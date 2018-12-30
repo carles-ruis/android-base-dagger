@@ -7,6 +7,8 @@ import android.view.View.VISIBLE
 import com.carles.carleskotlin.R
 import com.carles.carleskotlin.common.ui.BaseActivity
 import com.carles.carleskotlin.poi.model.Poi
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_poi_detail.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 
@@ -22,7 +24,7 @@ class PoiDetailActivity : BaseActivity<PoiDetailPresenter>(), PoiDetailView {
     }
 
     override fun initComponents() {
-        presenter = PoiDetailPresenter(this, intent.getStringExtra(EXTRA_ID))
+        presenter = PoiDetailPresenter(this, intent.getStringExtra(EXTRA_ID), AndroidSchedulers.mainThread(), Schedulers.io())
     }
 
     override fun displayPoiDetail(poi: Poi) {

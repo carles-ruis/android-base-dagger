@@ -4,40 +4,21 @@ import android.content.SharedPreferences
 import com.carles.carleskotlin.common.setCacheExpirationTime
 import com.carles.carleskotlin.poi.data.entity.PoiRealmObject
 import com.carles.carleskotlin.poi.model.Poi
-import com.nhaarman.mockito_kotlin.doReturn
-import com.nhaarman.mockito_kotlin.eq
-import com.nhaarman.mockito_kotlin.spy
-import com.nhaarman.mockito_kotlin.whenever
+import io.mockk.*
 import io.realm.Realm
-import io.realm.RealmQuery
-import org.amshove.kluent.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.ArgumentMatchers.anyLong
-import org.mockito.ArgumentMatchers.anyString
-import org.powermock.api.mockito.PowerMockito
-import org.powermock.api.mockito.PowerMockito.mockStatic
-import org.powermock.core.classloader.annotations.PrepareForTest
-import org.powermock.modules.junit4.PowerMockRunner
 
-@RunWith(PowerMockRunner::class)
-@PrepareForTest(Realm::class, SharedPreferences::class)
 class PoiLocalDatasourceTest {
 
     private lateinit var datasource: PoiLocalDatasource
-    private val sharedPreferences: SharedPreferences = mock()
-    private val realm: Realm = mock()
-    private val realmQuery: RealmQuery<PoiRealmObject> = mock()
+    private val sharedPreferences: SharedPreferences = mockk()
+    private val realm: Realm = mockk()
 
     @Before
     fun setup() {
-        mockStatic(Realm::class.java)
-        whenever(Realm.getDefaultInstance()) doReturn realm
-        whenever(realm.where<PoiRealmObject>(any())) doReturn realmQuery
-        whenever(ExtensionsKt.)
-        mockStatic(SharedPreferences::class.java)
-        PowerMockito.doNothing().`when`(SharedPreferences::class.java, "setCacheExpirationTime", any(), any(), any())
+        mockkStatic("io.realm.Realm")
+        every { Realm.getDefaultInstance() } returns realm
         datasource = PoiLocalDatasource(sharedPreferences)
     }
 
@@ -48,47 +29,48 @@ class PoiLocalDatasourceTest {
 
     @Test
     fun getPoiDetail_shouldReturnNoValuesIfCacheExpired() {
-        val spy = spy(datasource)
-        doReturn(true).whenever(spy).isExpired(anyString(), anyString())
+        val spy = spyk(datasource)
+        every { spy.isExpired(any(), any()) } returns true
         spy.getPoiDetail("some_id").test().assertNoValues().assertComplete()
-        VerifyNoInteractions on realm
+        verify { Realm.getDefaultInstance() wasNot Called }
     }
 
     @Test
     fun getPoiDetail_shouldReturnNoValuesIfNoData() {
-        val spy = spy(datasource)
-        doReturn(false).whenever(spy).isExpired(anyString(), anyString())
-        whenever(realmQuery.equalTo(anyString(), anyString())) doReturn realmQuery
-        whenever(realmQuery.findFirst()) doReturn null as? PoiRealmObject
+        val spy = spyk(datasource)
+        every { spy.isExpired(any(), any()) } returns false
+        every { realm.where(PoiRealmObject::class.java).equalTo(any(), any<String>()).findFirst() } returns null
+        every { realm.close() } just Runs
 
         spy.getPoiDetail("some_id").test().assertNoValues().assertComplete()
-        Verify on realm that realm.where(eq(PoiRealmObject::class.java))
-        Verify on realm that realm.close()
+        verify { realm.where(PoiRealmObject::class.java); realm.close() }
     }
 
     @Test
     fun getPoiDetail_shouldReturnStoredValues() {
-        val spy = spy(datasource)
-        doReturn(false).whenever(spy).isExpired(anyString(), anyString())
-        whenever(realmQuery.equalTo(anyString(), anyString())) doReturn realmQuery
-        whenever(realmQuery.findFirst()) doReturn PoiRealmObject("some_id")
+        val spy = spyk(datasource)
+        every { spy.isExpired(any(), any()) } returns false
+        every { realm.where(PoiRealmObject::class.java).equalTo(any(), any<String>()).findFirst() } returns PoiRealmObject("some_id")
+        every { realm.close() } just Runs
 
         spy.getPoiDetail("some_id").test().assertValue(Poi("some_id")).assertComplete()
-        Verify on realm that realm.where(PoiRealmObject::class.java)
-        Verify on realm that realm.close()
+        verify { realm.where(PoiRealmObject::class.java); realm.close() }
     }
 
     @Test
     fun persist_shouldPersistToRealm() {
         val poi = Poi("some_id")
-
+        every { realm.executeTransaction(any()) } just Runs
+        every { realm.close() } just Runs
+        mockkStatic("com.carles.carleskotlin.common.ExtensionsKt")
+        every { sharedPreferences.setCacheExpirationTime(any(), any(), any()) } just Runs
 
         datasource.persist(poi)
 
-        Verify on realm that realm.copyToRealmOrUpdate(any(PoiRealmObject::class))
-        Verify on realm that realm.close()
-        Verify on sharedPreferences that sharedPreferences.setCacheExpirationTime(any(), eq("some_id"), anyLong())
+        verify {
+            realm.executeTransaction(any())
+            realm.close()
+            sharedPreferences.setCacheExpirationTime(PoiRealmObject::class.java.name, "some_id", any())
+        }
     }
-
-
 }

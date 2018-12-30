@@ -5,6 +5,8 @@ import android.support.v7.widget.DividerItemDecoration.VERTICAL
 import com.carles.carleskotlin.R
 import com.carles.carleskotlin.common.ui.BaseActivity
 import com.carles.carleskotlin.poi.model.Poi
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_poi_list.poilist_recyclerview
 import kotlinx.android.synthetic.main.view_toolbar.toolbar
 
@@ -21,7 +23,7 @@ class PoiListActivity : BaseActivity<PoiListPresenter>(), PoiListView, PoiListAd
     }
 
     override fun initComponents() {
-        presenter = PoiListPresenter(this)
+        presenter = PoiListPresenter(this, AndroidSchedulers.mainThread(), Schedulers.io())
     }
 
     override fun displayPoiList(poiList: List<Poi>) {

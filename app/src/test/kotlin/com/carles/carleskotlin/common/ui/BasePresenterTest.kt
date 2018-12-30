@@ -1,37 +1,36 @@
 package com.carles.carleskotlin.common.ui
 
-import org.amshove.kluent.mock
-import org.amshove.kluent.shouldBe
-import org.amshove.kluent.shouldBeFalse
-import org.amshove.kluent.shouldBeTrue
+import io.mockk.Runs
+import io.mockk.every
+import io.mockk.just
+import io.mockk.mockk
+import io.reactivex.disposables.Disposable
+import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
 class BasePresenterTest {
 
     private lateinit var presenter : BasePresenter<BaseView>
 
     @Before
     fun setup() {
-        presenter = object : BasePresenter<BaseView>(mock()) {}
-        presenter.uiScheduler = mock()
-        presenter.processScheduler = mock()
+        presenter = object : BasePresenter<BaseView>(mockk()) {}
     }
 
     @Test
     fun onViewDestroyed_shouldDispose() {
-        presenter.addDisposable(mock())
+        val disposable : Disposable = mockk()
+        every { disposable.dispose() } just Runs
+        presenter.addDisposable(disposable)
         presenter.onViewDestroyed()
-        presenter.disposables.isDisposed.shouldBeTrue()
+        assertTrue(presenter.disposables.isDisposed)
     }
 
     @Test
     fun addDisposable_shouldAdd() {
-        presenter.addDisposable(mock())
-        presenter.disposables.size() shouldBe 1
-        presenter.disposables.isDisposed.shouldBeFalse()
+        presenter.addDisposable(mockk())
+        assertEquals(1, presenter.disposables.size())
+        assertFalse(presenter.disposables.isDisposed)
     }
 }

@@ -9,7 +9,6 @@ import com.carles.carleskotlin.poi.toModel
 import com.carles.carleskotlin.poi.toRealmObject
 import io.reactivex.Maybe
 import io.realm.Realm
-import io.realm.kotlin.where
 import javax.inject.Inject
 
 class PoiLocalDatasource @Inject constructor(sharedPreferences: SharedPreferences) : BaseLocalDatasource(sharedPreferences) {
@@ -20,7 +19,7 @@ class PoiLocalDatasource @Inject constructor(sharedPreferences: SharedPreference
         if (isExpired(PoiRealmObject::class.java.name, id)) return Maybe.empty()
 
         val realm = Realm.getDefaultInstance()
-        val poiRealmObject = realm.where<PoiRealmObject>().equalTo(PoiRealmObject.ID, id).findFirst()
+        val poiRealmObject = realm.where(PoiRealmObject::class.java).equalTo(PoiRealmObject.ID, id).findFirst()
         val poi = poiRealmObject?.toModel()
         realm.close()
         return if (poi == null) Maybe.empty() else Maybe.just(poi)

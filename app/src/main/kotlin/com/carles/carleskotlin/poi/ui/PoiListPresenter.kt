@@ -8,21 +8,23 @@ import com.carles.carleskotlin.poi.DaggerPoiPresenterInjector
 import com.carles.carleskotlin.poi.PoiModule
 import com.carles.carleskotlin.poi.model.Poi
 import com.carles.carleskotlin.poi.repository.PoiRepository
+import io.reactivex.Scheduler
 import javax.inject.Inject
 
-class PoiListPresenter(poiListView: PoiListView) : BasePresenter<PoiListView>(poiListView) {
+class PoiListPresenter(poiListView: PoiListView, val uiScheduler: Scheduler, val processScheduler: Scheduler, val test: Boolean = false) : BasePresenter<PoiListView>(poiListView) {
 
     @Inject
-    lateinit var poiRepository:PoiRepository
+    lateinit var poiRepository: PoiRepository
 
     init {
-        DaggerPoiPresenterInjector.builder()
-            .baseView(view)
-            .appModule(AppModule)
-            .serviceModule(ServiceModule)
-            .poiModule(PoiModule)
-            .build()
-            .inject(this)
+        if (!test)
+            DaggerPoiPresenterInjector.builder()
+                .baseView(view)
+                .appModule(AppModule)
+                .serviceModule(ServiceModule)
+                .poiModule(PoiModule)
+                .build()
+                .inject(this)
     }
 
     override fun onViewCreated() {
@@ -41,4 +43,6 @@ class PoiListPresenter(poiListView: PoiListView) : BasePresenter<PoiListView>(po
     fun onPoiClicked(poi: Poi) {
         view.navigateToPoiDetail(poi.id)
     }
+
+
 }

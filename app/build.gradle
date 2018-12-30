@@ -28,6 +28,9 @@ android {
         test.java.srcDirs += 'src/test/kotlin'
         androidTest.java.srcDirs += 'src/androidTest/kotlin'
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 androidExtensions {
@@ -53,8 +56,4 @@ dependencies {
 
     testImplementation appDependencies.jUnit
     testImplementation appDependencies.mockk
-    testImplementation appDependencies.mockito
-    testImplementation appDependencies.powermockApi
-    testImplementation appDependencies.powermockModule
-    testImplementation appDependencies.kluent
 }
