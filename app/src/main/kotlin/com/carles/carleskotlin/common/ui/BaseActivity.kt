@@ -22,7 +22,6 @@ abstract class BaseActivity<P : BasePresenter<BaseView>> : AppCompatActivity(), 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        AndroidInjection.inject(this)
         overridePendingTransition(R.anim.slide_in_from_right_to_left, R.anim.slide_out_from_right_to_left)
         setContentView(layoutResourceId)
         initViews()
