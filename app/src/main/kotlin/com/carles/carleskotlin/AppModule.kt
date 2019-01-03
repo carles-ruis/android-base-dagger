@@ -20,14 +20,4 @@ object AppModule {
     @Provides
     @Singleton
     internal fun provideSharedPreferences(context: Context) = PreferenceManager.getDefaultSharedPreferences(context)
-
-    @Provides
-    @Singleton
-    @Named("uiScheduler")
-    internal fun provideUiScheduler(): Scheduler = AndroidSchedulers.mainThread()
-
-    @Provides
-    @Singleton
-    @Named("processScheduler")
-    internal fun provideProcessScheduler(): Scheduler = Schedulers.io()
 }
